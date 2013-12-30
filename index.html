@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/application.css">
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        function draw_days() {
+          var $days_canvas = $("#days");
+          var days_context = $days_canvas[0].getContext("2d");
+
+          for (var i=0; i<100; i++) {
+            var x = 2 * i;
+            var y = 0;
+            var height = 1;
+            var width = 1;
+
+            days_context.fillRect(x, y, height, width);
+          }
+        }
+
+        draw_days();
+      });
+    </script>
+  </head>
+  <body>
+    <progress max="100" value="80"></progress>
+
+    <canvas id="days"></canvas>
+  </body>
+</html>
