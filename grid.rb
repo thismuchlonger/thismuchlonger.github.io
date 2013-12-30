@@ -18,11 +18,11 @@ class Grid
   private
 
   def row_value(day)
-    (row(day) * size) + (row(day) * padding)
+    row(day) * (size + padding)
   end
 
   def col_value(day)
-    (day * size) + (day * padding) - (row(day) * width)
+    (day * (size + padding)) - (row(day) * days_per_row * (padding + size))
   end
 
   def days_per_row
@@ -66,4 +66,3 @@ grid.padding = 2
 grid.width = 9
 grid.height = 9
 p grid.coords == [[0,0], [4,0], [0,4], [4,4]]
-p grid.coords
