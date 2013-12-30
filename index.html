@@ -4,21 +4,49 @@
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        function draw_days() {
-          var $days_canvas = $("#days");
-          var days_context = $days_canvas[0].getContext("2d");
+        function Grid() {
+          this.days = 1000;
+          this.size = 4;
+          this.padding = 1;
+          this.height = 150;
+          this.width = 300;
 
-          for (var i=0; i<100; i++) {
-            var x = 2 * i;
-            var y = 0;
-            var height = 1;
-            var width = 1;
+          this.daysPerRow = function() {
+            return this.width / (this.padding + this.size);
+          };
 
-            days_context.fillRect(x, y, height, width);
-          }
-        }
+          this.row = function(day) {
+            return Math.floor(day / this.daysPerRow());
+          };
 
-        draw_days();
+          this.rowValue = function(day) {
+            return this.row(day) * (this.size + this.padding);
+          };
+
+          this.colValue = function(day) {
+            return (day * (this.size + this.padding)) - (this.row(day) * this.daysPerRow() * (this.padding + this.size));
+          };
+
+          this.coords = function(day) {
+            var array = [];
+
+            for (var day=0; day<grid.days; day++){
+              array.push([this.colValue(day),this.rowValue(day)]);
+            }
+
+            return array;
+          };
+        };
+
+        var $days_canvas = $("#days");
+        var days_context = $days_canvas[0].getContext("2d");
+        var days_canvas_width = $days_canvas.width();
+        var days_canvas_height = $days_canvas.height();
+        var grid = new Grid();
+
+        $.each(grid.coords(), function(index, e){
+          days_context.fillRect(e[0], e[1], grid.size, grid.size);
+        });
       });
     </script>
   </head>
