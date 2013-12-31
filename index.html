@@ -7,11 +7,11 @@
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        function Grid(canvas) {
+        function Grid(canvas, count, size, padding) {
           this.canvas = canvas;
-          this.days = 10000;
-          this.size = 7;
-          this.padding = 2;
+          this.days = count;
+          this.size = size;
+          this.padding = padding;
           this.canvasContext = canvas[0].getContext("2d");
 
           this.width = function() {
@@ -53,7 +53,7 @@
           this.coords = function(day) {
             var array = [];
 
-            for (var day=0; day<grid.days; day++){
+            for (var day=0; day<this.days; day++){
               array.push([this.colValue(day),this.rowValue(day)]);
             }
 
@@ -61,12 +61,12 @@
           };
 
           this.draw = function() {
-            grid.canvas.attr('height', this.height());
-            grid.canvas.attr('width', this.minWidth());
+            this.canvas.attr('height', this.height());
+            this.canvas.attr('width', this.minWidth());
 
             var coords = this.coords();
 
-            for (var day = 0; day < grid.days; day++){
+            for (var day = 0; day < this.days; day++){
               this.canvasContext.fillRect(coords[day][0], coords[day][1], this.size, this.size);
             };
           };
@@ -74,12 +74,17 @@
 
         function respondCanvas(grid) {
           grid.canvas.attr('width', grid.container().width());
-
           grid.draw();
         }
 
-        var grid = new Grid($("#days"));
-        respondCanvas(grid);
+        var daysGrid = new Grid($("#days"), 10000, 7, 2);
+        respondCanvas(daysGrid);
+
+        var monthsGrid = new Grid($("#months"), 330, 38, 2);
+        respondCanvas(monthsGrid);
+
+        var monthsGrid = new Grid($("#years"), 38, 133, 2);
+        respondCanvas(monthsGrid);
 
         $(window).resize(function(){
           // respondCanvas(grid);
@@ -107,6 +112,20 @@
         <div class="canvasContainer">
           <canvas id="days" width="1000" height="500"></canvas>
           <span class="counter">10,000 Days</span>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="canvasContainer">
+          <canvas id="months" width="1000" height="500"></canvas>
+          <span class="counter">330 Months</span>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="canvasContainer">
+          <canvas id="years" width="1000" height="500"></canvas>
+          <span class="counter">38 Years</span>
         </div>
       </section>
     </main>
