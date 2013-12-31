@@ -4,15 +4,16 @@
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        function Grid() {
-          this.days = 1000;
-          this.size = 4;
-          this.padding = 1;
-          this.height = 150;
-          this.width = 300;
+        function Grid(canvas) {
+          this.canvas = canvas;
+          this.days = 10000;
+          this.size = 5;
+          this.padding = 2;
+          this.height = canvas.height();
+          this.width = canvas.width();
 
           this.daysPerRow = function() {
-            return this.width / (this.padding + this.size);
+            return Math.floor(this.width / (this.padding + this.size));
           };
 
           this.row = function(day) {
@@ -25,6 +26,10 @@
 
           this.colValue = function(day) {
             return (day * (this.size + this.padding)) - (this.row(day) * this.daysPerRow() * (this.padding + this.size));
+          };
+
+          this.excess = function() {
+            return this.width % (this.size + this.padding);
           };
 
           this.coords = function(day) {
@@ -40,9 +45,7 @@
 
         var $days_canvas = $("#days");
         var days_context = $days_canvas[0].getContext("2d");
-        var days_canvas_width = $days_canvas.width();
-        var days_canvas_height = $days_canvas.height();
-        var grid = new Grid();
+        var grid = new Grid($days_canvas);
 
         $.each(grid.coords(), function(index, e){
           days_context.fillRect(e[0], e[1], grid.size, grid.size);
@@ -53,6 +56,6 @@
   <body>
     <progress max="100" value="80"></progress>
 
-    <canvas id="days"></canvas>
+    <canvas id="days" width="1000" height="500"></canvas>
   </body>
 </html>
