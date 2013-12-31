@@ -14,6 +14,7 @@
           this.padding = 2;
           this.height = canvas.height();
           this.width = canvas.width();
+          this.canvasContext = canvas[0].getContext("2d");
 
           this.daysPerRow = function() {
             return Math.floor(this.width / (this.padding + this.size));
@@ -44,15 +45,18 @@
 
             return array;
           };
+
+          this.draw = function() {
+            var coords = this.coords();
+
+            for (var day = 0; day < grid.days; day++){
+              this.canvasContext.fillRect(coords[day][0], coords[day][1], this.size, this.size);
+            };
+          };
         };
 
-        var $days_canvas = $("#days");
-        var days_context = $days_canvas[0].getContext("2d");
-        var grid = new Grid($days_canvas);
-
-        $.each(grid.coords(), function(index, e){
-          days_context.fillRect(e[0], e[1], grid.size, grid.size);
-        });
+        var grid = new Grid($("#days"));
+        grid.draw();
       });
     </script>
   </head>
