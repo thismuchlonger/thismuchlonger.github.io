@@ -1,3 +1,7 @@
 canvas#days {
   border: 1px solid red;
 }
+
+meter {
+  width: 100%;
+}
