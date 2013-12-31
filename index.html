@@ -10,7 +10,7 @@
         function Grid(canvas) {
           this.canvas = canvas;
           this.days = 10000;
-          this.size = 5;
+          this.size = 7;
           this.padding = 2;
           this.canvasContext = canvas[0].getContext("2d");
 
@@ -18,8 +18,12 @@
             return canvas.width();
           };
 
+          this.minWidth = function() {
+            return this.daysPerRow() * (this.size + this.padding);
+          }
+
           this.height = function() {
-            return canvas.height();
+            return Math.ceil(this.days / this.daysPerRow()) * (this.size + this.padding);
           };
 
           this.container = function() {
@@ -57,6 +61,9 @@
           };
 
           this.draw = function() {
+            grid.canvas.attr('height', this.height());
+            grid.canvas.attr('width', this.minWidth());
+
             var coords = this.coords();
 
             for (var day = 0; day < grid.days; day++){
@@ -67,7 +74,6 @@
 
         function respondCanvas(grid) {
           grid.canvas.attr('width', grid.container().width());
-          grid.canvas.attr('height', grid.container().height());
 
           grid.draw();
         }

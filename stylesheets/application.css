@@ -1,9 +1,10 @@
 canvas#days {
-  border: 1px solid red;
 }
 
 .canvasContainer {
   width: 100%;
+  margin: auto;
+  text-align: center;
 }
 
 meter {
