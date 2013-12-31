@@ -12,12 +12,18 @@
           this.days = 10000;
           this.size = 5;
           this.padding = 2;
-          this.height = canvas.height();
-          this.width = canvas.width();
           this.canvasContext = canvas[0].getContext("2d");
 
+          this.width = function() {
+            return canvas.width();
+          }
+
+          this.height = function() {
+            return canvas.height();
+          }
+
           this.daysPerRow = function() {
-            return Math.floor(this.width / (this.padding + this.size));
+            return Math.floor(this.width() / (this.padding + this.size));
           };
 
           this.row = function(day) {
@@ -33,7 +39,7 @@
           };
 
           this.excess = function() {
-            return this.width % (this.size + this.padding);
+            return this.width() % (this.size + this.padding);
           };
 
           this.coords = function(day) {
