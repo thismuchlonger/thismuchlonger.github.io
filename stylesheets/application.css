@@ -21,4 +21,15 @@ canvas#days {
 
 meter {
   width: 100%;
+  position: relative;
+}
+
+#meterMinPercent,
+#meterMinYears {
+  float: left;
+}
+
+#meterMaxPercent,
+#meterMaxYears {
+  float: right;
 }
