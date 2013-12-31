@@ -2,6 +2,10 @@ canvas#days {
   border: 1px solid red;
 }
 
+.canvasContainer {
+  width: 100%;
+}
+
 meter {
   width: 100%;
 }

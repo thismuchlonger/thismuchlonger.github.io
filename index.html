@@ -16,11 +16,15 @@
 
           this.width = function() {
             return canvas.width();
-          }
+          };
 
           this.height = function() {
             return canvas.height();
-          }
+          };
+
+          this.container = function() {
+            return $(canvas.parent());
+          };
 
           this.daysPerRow = function() {
             return Math.floor(this.width() / (this.padding + this.size));
@@ -61,8 +65,19 @@
           };
         };
 
+        function respondCanvas(grid) {
+          grid.canvas.attr('width', grid.container().width());
+          grid.canvas.attr('height', grid.container().height());
+
+          grid.draw();
+        }
+
         var grid = new Grid($("#days"));
-        grid.draw();
+        respondCanvas(grid);
+
+        $(window).resize(function(){
+          // respondCanvas(grid);
+        });
       });
     </script>
   </head>
@@ -83,7 +98,9 @@
       </section>
 
       <section class="container">
-        <canvas id="days" width="1000" height="500"></canvas>
+        <div class="canvasContainer">
+          <canvas id="days" width="1000" height="500"></canvas>
+        </div>
       </section>
     </main>
 
