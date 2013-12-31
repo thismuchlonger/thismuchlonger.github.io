@@ -1,7 +1,10 @@
 <!DOCTYPE html>
   <head>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/stylesheets/application.css">
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         function Grid(canvas) {
@@ -54,8 +57,27 @@
     </script>
   </head>
   <body>
-    <progress max="100" value="80"></progress>
+    <header>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/">not much longer</a>
+            </div>
+          </div>
+        </nav>
+    </header>
 
-    <canvas id="days" width="1000" height="500"></canvas>
+    <main>
+      <section class="container">
+        <progress max="100" value="80"></progress>
+      </section>
+
+      <section class="container">
+        <canvas id="days" width="1000" height="500"></canvas>
+      </section>
+    </main>
+
+    <footer>
+    </footer>
   </body>
 </html>
