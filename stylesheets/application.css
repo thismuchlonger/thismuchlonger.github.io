@@ -5,6 +5,20 @@ canvas#days {
   width: 100%;
   margin: auto;
   text-align: center;
+  position: relative;
+}
+
+.counter {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  padding: 0px;
+  margin: 0px;
+  font-size: 10em;
+  vertical-align: bottom;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 meter {
