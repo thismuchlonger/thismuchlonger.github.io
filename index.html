@@ -80,10 +80,10 @@
         var daysGrid = new Grid($("#days"), 10000, 7, 2);
         respondCanvas(daysGrid);
 
-        var monthsGrid = new Grid($("#months"), 330, 38, 2);
+        var monthsGrid = new Grid($("#months"), 330, 38, 4);
         respondCanvas(monthsGrid);
 
-        var monthsGrid = new Grid($("#years"), 38, 133, 2);
+        var monthsGrid = new Grid($("#years"), 38, 133, 8);
         respondCanvas(monthsGrid);
 
         $(window).resize(function(){
@@ -99,6 +99,13 @@
             <div class="navbar-header">
               <a class="navbar-brand" href="/">not much longer</a>
             </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#">
+                  <span class="glyphicon glyphicon-cog"></span> Config
+                </a>
+              </li>
+            </ul>
           </div>
         </nav>
     </header>
