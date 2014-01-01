@@ -12,6 +12,23 @@
 meter {
   width: 100%;
   position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  border: 1px solid #ccc;
+}
+
+meter::-webkit-meter-bar {
+  background: transparent;
+  border: 1px solid #ccc;
+}
+
+meter::-moz-meter-bar {
+  background: #ccc;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: #ccc;
 }
 
 #meterPercent {
