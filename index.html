@@ -76,6 +76,39 @@
           };
         };
 
+        function daysBetweenNowAnd(date) {
+          var ONE_DAY = 1000 * 60 * 60 * 24;
+
+          var date_ms = date.getTime();
+          var now_ms = new Date().getTime();
+          var difference_ms = Math.abs(date_ms - now_ms);
+
+          return Math.floor(difference_ms/ONE_DAY);
+        }
+
+        function monthsBetweenNowAnd(date) {
+          var ONE_DAY = 1000 * 60 * 60 * 24;
+          var ONE_YEAR = ONE_DAY * 7 * 52;
+          var ONE_MONTH = ONE_YEAR / 12;
+
+          var date_ms = date.getTime();
+          var now_ms = new Date().getTime();
+          var difference_ms = Math.abs(date_ms - now_ms);
+
+          return Math.floor(difference_ms/ONE_MONTH);
+        }
+
+        function yearsBetweenNowAnd(date) {
+          var ONE_DAY = 1000 * 60 * 60 * 24;
+          var ONE_YEAR = ONE_DAY * 7 * 52;
+
+          var date_ms = date.getTime();
+          var now_ms = new Date().getTime();
+          var difference_ms = Math.abs(date_ms - now_ms);
+
+          return Math.floor(difference_ms/ONE_YEAR);
+        }
+
         function respondCanvas(grid) {
           grid.canvas.attr('width', grid.container().width());
           grid.draw();
@@ -84,10 +117,10 @@
         $("form").submit(function(e){
           e.preventDefault();
 
-          var age = parseInt($("#age").val(), 10);
+          var dob = $("#dob").val();
           var expectancy = parseInt($("#expectancy").val(), 10);
 
-          $.cookie('this_much_longer', {"age": age, "expectancy": expectancy});
+          $.cookie('this_much_longer', {"dob": dob, "expectancy": expectancy});
 
           updateValues();
 
@@ -95,15 +128,21 @@
         });
 
         function updateValues() {
-          var age = $.cookie('this_much_longer')['age'];
+          var dob = new Date($.cookie('this_much_longer')['dob']);
+          var now = new Date();
           var expectancy = $.cookie('this_much_longer')['expectancy'];
-          var yearsRemaining = expectancy - age;
-          var monthsRemaining = 12 * yearsRemaining;
-          var daysRemaining = yearsRemaining * 52 * 7;
+          var expiry = new Date(dob.getTime()); expiry.setYear(expiry.getUTCFullYear() + expectancy);
+          var percent = Math.round(((now.getTime() - dob.getTime()) / (expiry.getTime() - dob.getTime())) * 100);
 
-          $("meter").attr("max", expectancy);
-          $("meter").val(age);
-          $("#meterPercent .current").html(Math.round((age/expectancy)*100));
+          var yearsRemaining = yearsBetweenNowAnd(expiry);
+          var monthsRemaining = monthsBetweenNowAnd(expiry);
+          var daysRemaining = daysBetweenNowAnd(expiry);
+
+          $("meter").attr("min", dob.getTime());
+          $("meter").attr("max", expiry.getTime());
+          $("meter").val(now.getTime());
+
+          $("#meterPercent .current").html(percent);
 
           $(".remaining .years").html(yearsRemaining);
           $(".remaining .months").html(monthsRemaining);
@@ -118,7 +157,7 @@
           var yearsGrid = new Grid($("#years"), yearsRemaining, 133, 8);
           respondCanvas(yearsGrid);
 
-          $("#age").val($.cookie('this_much_longer')['age']);
+          $("#dob").val($.cookie('this_much_longer')['dob']);
           $("#expectancy").val($.cookie('this_much_longer')['expectancy']);
         };
 
@@ -200,8 +239,8 @@
           <form>
             <div class="modal-body">
               <div class="form-group">
-                <label for="age">How old are you?</label>
-                <input type="number" class="form-control" id="age" placeholder="e.g. 25">
+                <label for="dob">When were you born?</label>
+                <input type="date" id="dob" name="dob">
               </div>
 
               <div class="form-group">
