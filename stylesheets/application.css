@@ -1,12 +1,9 @@
-canvas#days {
-}
-
 .canvasContainer {
   width: 100%;
   position: relative;
 }
 
-.counter {
+.remaining {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -24,12 +21,6 @@ meter {
   position: relative;
 }
 
-#meterMinPercent,
-#meterMinYears {
-  float: left;
-}
-
-#meterMaxPercent,
-#meterMaxYears {
+#meterPercent {
   float: right;
 }

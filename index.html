@@ -4,9 +4,12 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/stylesheets/application.css">
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.cookie.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
+        $.cookie.json = true;
+
         function Grid(canvas, count, size, padding) {
           this.canvas = canvas;
           this.days = count;
@@ -77,18 +80,52 @@
           grid.draw();
         }
 
-        var daysGrid = new Grid($("#days"), 10000, 7, 2);
-        respondCanvas(daysGrid);
+        $("form").submit(function(e){
+          e.preventDefault();
 
-        var monthsGrid = new Grid($("#months"), 330, 38, 4);
-        respondCanvas(monthsGrid);
+          var age = parseInt($("#age").val(), 10);
+          var expectancy = parseInt($("#expectancy").val(), 10);
 
-        var monthsGrid = new Grid($("#years"), 38, 133, 8);
-        respondCanvas(monthsGrid);
+          $.cookie('this_much_longer', {"age": age, "expectancy": expectancy});
 
-        $(window).resize(function(){
-          // respondCanvas(grid);
+          updateValues();
+
+          $("#config-modal").modal('hide')
         });
+
+        function updateValues() {
+          var age = $.cookie('this_much_longer')['age'];
+          var expectancy = $.cookie('this_much_longer')['expectancy'];
+          var yearsRemaining = expectancy - age;
+          var monthsRemaining = 12 * yearsRemaining;
+          var daysRemaining = yearsRemaining * 52 * 7;
+
+          $("meter").attr("max", expectancy);
+          $("meter").val(age);
+          $("#meterPercent .current").html(Math.round((age/expectancy)*100));
+
+          $(".remaining .years").html(yearsRemaining);
+          $(".remaining .months").html(monthsRemaining);
+          $(".remaining .days").html(daysRemaining);
+
+          var daysGrid = new Grid($("#days"), daysRemaining, 7, 2);
+          respondCanvas(daysGrid);
+
+          var monthsGrid = new Grid($("#months"), monthsRemaining, 38, 4);
+          respondCanvas(monthsGrid);
+
+          var yearsGrid = new Grid($("#years"), yearsRemaining, 133, 8);
+          respondCanvas(yearsGrid);
+
+          $("#age").val($.cookie('this_much_longer')['age']);
+          $("#expectancy").val($.cookie('this_much_longer')['expectancy']);
+        };
+
+        $("button").on("click", function(){
+          $("form").submit();
+        });
+
+        updateValues();
       });
     </script>
   </head>
@@ -101,7 +138,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <a href="#">
+                <a data-toggle="modal" data-target="#config-modal">
                   <span class="glyphicon glyphicon-cog"></span> Config
                 </a>
               </li>
@@ -113,37 +150,71 @@
     <main>
       <section class="container">
         <div id="meterContainer">
-          <span id="meterMinPercent">0</span>
-          <span id="meterMaxPercent">100%</span>
+          <span id="meterPercent">
+            <span class="current"></span>%
+          </span>
 
-          <meter max="100" value="80">Stuff</meter>
-
-          <span id="meterMinYears">0</span>
-          <span id="meterMaxYears">100 Years<span>
+          <meter max="100" value="0"></meter>
         </div>
       </section>
 
       <section class="container">
         <div class="canvasContainer">
           <canvas id="days" width="1000" height="500"></canvas>
-          <span class="counter">10,000 Days</span>
+          <span class="remaining">
+            <span class="days"></span>
+            <span class="units">Days</span>
+          </span>
         </div>
       </section>
 
       <section class="container">
         <div class="canvasContainer">
           <canvas id="months" width="1000" height="500"></canvas>
-          <span class="counter">330 Months</span>
+          <span class="remaining">
+            <span class="months"></span>
+            <span class="units">Months</span>
+          </span>
         </div>
       </section>
 
       <section class="container">
         <div class="canvasContainer">
           <canvas id="years" width="1000" height="500"></canvas>
-          <span class="counter">38 Years</span>
+          <span class="remaining">
+            <span class="years"></span>
+            <span class="units">Years</span>
+          </span>
         </div>
       </section>
     </main>
+
+    <div class="modal fade" id="config-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Config</h4>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="age">How old are you?</label>
+                <input type="number" class="form-control" id="age" placeholder="e.g. 25">
+              </div>
+
+              <div class="form-group">
+                <label for="expectancy">How long do you want to live?</label>
+                <input type="number" class="form-control" id="expectancy" placeholder="e.g. 65">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Update">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <footer>
     </footer>
