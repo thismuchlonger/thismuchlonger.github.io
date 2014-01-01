@@ -38,3 +38,7 @@ meter::-webkit-meter-optimum-value {
 section {
   margin-top: 20px;
 }
+
+.close {
+  color: #fff;
+}
