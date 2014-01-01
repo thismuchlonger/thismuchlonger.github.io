@@ -124,10 +124,16 @@
 
           updateValues();
 
-          $("#config-modal").modal('hide')
+          $("#config-modal").modal('hide');
         });
 
         function updateValues() {
+          if (!$.cookie('this_much_longer')) {
+            $("#config-modal").modal('show');
+
+            return false;
+          }
+
           var dob = new Date($.cookie('this_much_longer')['dob']);
           var now = new Date();
           var expectancy = $.cookie('this_much_longer')['expectancy'];
