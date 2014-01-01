@@ -128,7 +128,7 @@
         });
 
         function updateValues() {
-          if (!$.cookie('this_much_longer')) {
+          if (!$.cookie('this_much_longer') || !$.cookie('this_much_longer')['dob'] || !$.cookie('this_much_longer')['expectancy']) {
             $("#config-modal").modal('show');
 
             return false;
