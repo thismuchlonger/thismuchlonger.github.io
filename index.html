@@ -70,6 +70,8 @@
             var coords = this.coords();
 
             for (var day = 0; day < this.days; day++){
+              this.canvasContext.imageSmoothingEnabled = false;
+              this.canvasContext.fillStyle = "#ccc";
               this.canvasContext.fillRect(coords[day][0], coords[day][1], this.size, this.size);
             };
           };
@@ -131,7 +133,7 @@
   </head>
   <body>
     <header>
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <nav class="navbar navbar-static-top" role="navigation">
           <div class="container">
             <div class="navbar-header">
               <a class="navbar-brand" href="/">not much longer</a>
@@ -209,7 +211,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Update">
+              <input type="submit" class="btn" value="Update">
             </div>
           </form>
         </div>

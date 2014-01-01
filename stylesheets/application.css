@@ -24,3 +24,7 @@ meter {
 #meterPercent {
   float: right;
 }
+
+section {
+  margin-top: 20px;
+}
