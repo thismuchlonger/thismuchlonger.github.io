@@ -13,9 +13,24 @@
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.cookie.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/Uri.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $.cookie.json = true;
+
+        function loadParams() {
+          var uri = new Uri(location.href);
+          var dob = uri.getQueryParamValue('dob');
+          var expectancy = parseInt(uri.getQueryParamValue('expectancy'), 10);
+
+          if (dob && expectancy) {
+            $.cookie('this_much_longer', {"dob": dob, "expectancy": expectancy});
+          }
+
+          return true;
+        };
+
+        loadParams();
 
         function Grid(canvas, count, size, padding) {
           this.canvas = canvas;
