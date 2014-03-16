@@ -9,6 +9,10 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
+.survey {
+  text-align: center;
+}
+
 meter {
   width: 100%;
   position: relative;
@@ -58,3 +62,4 @@ footer {
   padding: 20px;
   text-align: right;
 }
+
