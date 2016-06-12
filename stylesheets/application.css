@@ -88,3 +88,7 @@ footer {
 .survey {
   text-align: center;
 }
+
+.btn {
+  white-space: normal;
+}
