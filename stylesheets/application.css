@@ -31,7 +31,7 @@ html {
   color: rgba(255, 255, 255, 0.6);
 }
 
-meter {
+progress {
   width: 100%;
   position: relative;
   -webkit-appearance: none;
@@ -40,20 +40,24 @@ meter {
   border: 1px solid #ccc;
 }
 
-meter::-webkit-meter-bar {
+progress::-webkit-progress-bar {
   background: transparent;
   border: 1px solid #ccc;
 }
 
-meter::-moz-meter-bar {
+progress::-webkit-progress-value {
+  background-color: #ccc;
+}
+
+progress::-moz-progress-bar {
   background: #ccc;
 }
 
-meter::-webkit-meter-optimum-value {
+progress::-webkit-progress-optimum-value {
   background: #ccc;
 }
 
-#meterPercent {
+#progressPercent {
   float: right;
 }
 

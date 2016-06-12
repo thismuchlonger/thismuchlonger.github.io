@@ -168,11 +168,10 @@
           var monthsRemaining = monthsBetweenNowAnd(expiry);
           var daysRemaining = daysBetweenNowAnd(expiry);
 
-          $("meter").attr("min", dob.getTime());
-          $("meter").attr("max", expiry.getTime());
-          $("meter").val(now.getTime());
+          $("progress").attr("max", expiry.getTime());
+          $("progress").val(now.getTime());
 
-          $("#meterPercent .current").html(percent);
+          $("#progressPercent .current").html(percent);
 
           $(".remaining .years").html(yearsRemaining);
           $(".remaining .months").html(monthsRemaining);
@@ -235,12 +234,12 @@
       </section>
 
       <section class="container">
-        <div id="meterContainer">
-          <span id="meterPercent">
+        <div id="progressContainer">
+          <span id="progressPercent">
             <span class="current"></span>%
           </span>
 
-          <meter max="100" value="0"></meter>
+          <progress max="100" value="0"></progress>
         </div>
       </section>
 
